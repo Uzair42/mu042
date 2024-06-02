@@ -1,232 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 200px;
-            background-color: #333;
-            color: white;
-            position: fixed;
-            height: 100%;
-            padding-top: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar a {
-            padding: 15px;
-            text-decoration: none;
-            color: white;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #575757;
-        }
-
-        /* Main content */
-        .main-content {
-            margin-left: 200px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        /* Menu */
-        .menu {
-            background-color: #f4f4f4;
-            padding: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .menu a {
-            text-decoration: none;
-            color: #333;
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .menu a:hover {
-            background-color: #ddd;
-        }
-
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .menu {
-                flex-direction: column;
-            }
-        }
-
-        /* Calculator */
-        .calculator {
-            margin-top: 20px;
-        }
-
-        .calculator input, .calculator button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+    <title>Split Screen</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
-    <div class="sidebar">
-        <a href="#section1">Section 1</a>
-        <a href="#section2">Section 2</a>
-        <a href="#section3">Section 3</a>
-        <a href="#section4">Section 4</a>
-    </div>
-    <div class="main-content">
-        <div class="menu">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
+    <div class="container">
+        <div class="split left">
+            <h2>
+                blue is <strong>depth</strong>
+            </h2>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Age</th>
-                    <th>Country</th>
-                </tr>
-            </thead>
-            <tbody id="studentTable">
-                <tr>
-                    <td>John Doe</td>
-                    <td>2002-04-15</td>
-                    <td id="age1"></td>
-                    <td>USA</td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>2000-08-22</td>
-                    <td id="age2"></td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Samuel Johnson</td>
-                    <td>2003-01-10</td>
-                    <td id="age3"></td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Lisa Wong</td>
-                    <td>2001-12-05</td>
-                    <td id="age4"></td>
-                    <td>Australia</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="calculator">
-            <h3>Calculator</h3>
-            <input type="text" id="calcInput1" placeholder="Number 1">
-            <input type="text" id="calcInput2" placeholder="Number 2">
-            <button onclick="calculate('add')">+</button>
-            <button onclick="calculate('subtract')">-</button>
-            <button onclick="calculate('multiply')">*</button>
-            <button onclick="calculate('divide')">/</button>
-            <h4>Result: <span id="calcResult"></span></h4>
+        <div class="split right">
+            <h2>
+              black is <strong>power</strong>
+            </h2>
         </div>
     </div>
 
-    <script>
-        // Function to calculate age
-        function calculateAge(dob) {
-            const birthDate = new Date(dob);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            return age;
-        }
+    <div class="credit">Photo by <a href="https://unsplash.com/@nhillier">Nick Hillier</a> on <a
+            href="https://unsplash.com/">Unsplash</a></div>
 
-        // Populate ages in the table
-        document.querySelectorAll('#studentTable tr').forEach((row, index) => {
-            const dobCell = row.cells[1];
-            const ageCell = row.cells[2];
-            if (dobCell && ageCell) {
-                const dob = dobCell.textContent;
-                const age = calculateAge(dob);
-                ageCell.textContent = age;
-            }
-        });
-
-        // Calculator function
-        function calculate(operation) {
-            const input1 = parseFloat(document.getElementById('calcInput1').value);
-            const input2 = parseFloat(document.getElementById('calcInput2').value);
-            let result;
-
-            if (isNaN(input1) || isNaN(input2)) {
-                result = 'Invalid input';
-            } else {
-                switch (operation) {
-                    case 'add':
-                        result = input1 + input2;
-                        break;
-                    case 'subtract':
-                        result = input1 - input2;
-                        break;
-                    case 'multiply':
-                        result = input1 * input2;
-                        break;
-                    case 'divide':
-                        result = input2 !== 0 ? input1 / input2 : 'Cannot divide by zero';
-                        break;
-                }
-            }
-
-            document.getElementById('calcResult').textContent = result;
-        }
-    </script>
+    <script src="scripts/main.js"></script>
 </body>
+
 </html>
